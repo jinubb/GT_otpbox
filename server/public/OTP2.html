@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>OTPbox</title>
+<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+  var SetTime=0;
+   var socket=null;
+   $(document).ready(function(){
+	   socket=io.connect(); // 3000port
+   });
+
+
+   window.onload = function TimerStart(){ tid=setInterval('msg_time()',1000) };
+
+
+   function msg_time() {	// 1초씩 카운트
+
+     m = Math.floor(SetTime / 60) + "분 " + (SetTime % 60) + "초";	// 남은 시간 계산
+
+     var msg = "<font color='red'>" + m + "</font>";
+
+     document.all.ViewTimer.innerHTML = msg;		// div 영역에 보여줌
+
+     SetTime--;					// 1초씩 감소
+
+     if (SetTime < 0) {			// 시간이 종료 되었으면..
+
+       clearInterval(tid);		// 타이머 해제
+ //        alert("종료");
+     }
+
+   }
+
+	function createOTP() {
+    	var newPsswrod;
+    	var randomValue = "0123456789";
+
+    	for(i=1; i<=4; i++){
+        	randomPoint = Math.floor(Math.random()*10);
+        	Pwdchar = randomValue.charAt(randomPoint);
+        	if(i == 1){
+            	newPassword = Pwdchar;
+        	}
+        	else{
+            	newPassword += Pwdchar;
+        	}
+    	}
+    	socket.emit("create_OTP", newPassword);
+
+
+
+      SetTime = 60;		// 최초 설정 시간(기본 : 초)
+
+    	alert("Created new OTP : "+newPassword);
+	}
+</script>
+<style>
+  body {
+    width:440px;
+  }
+  #header, #nav, #section, #article, #aside, #footer {
+    display:block;
+    width:400px;
+    margin:4px;
+    padding:4px;
+    background-color:#ddd;
+    text-align:center;
+  }
+  #section {
+    float:left;
+    width:280px;
+    height:60px;
+  }
+  #article {
+    width:264px;
+    background-color:#efefef;
+  }
+  #aside {
+    float:left;
+    width:104px;
+    height:60px;
+  }
+  #footer {
+    overflow:hidden;
+  }
+</style>
+<style>
+
+.button {
+
+background-color: blue;
+
+border: none;
+
+color: white;
+padding: 5px 3px;
+text-align: center;
+
+text-decoration: none;
+
+display: inline-block;
+
+font-size: 20px;
+
+
+cursor: pointer;
+
+}
+
+</style>
+</head>
+<body>
+    <h1>HTML5 레이아웃</h1>
+    <div id="header">Header</div>
+    <div id="nav">Nav</div>
+    <div id="section">
+      남은시간
+      <div id="article"><div id="ViewTimer"></div></div>
+    </div>
+    <div id="aside">
+  <form>
+      <input type='button' class='button' value='createOTP' onclick="createOTP()" >
+  </form></div>
+    <div id="footer">Footer</div>
+</body>
+</html>

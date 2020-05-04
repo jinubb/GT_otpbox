@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <title>Otpbox Web Page</title>
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript">
+    //소켓통신 연결
+    var socket=null;
+    $(document).ready(function(){
+      socket=io.connect(); // 3000port
+    });
+
+    //타이머
+    //1초에 한번씩 msg_time()함수 실행
+    window.onload = function TimerStart(){ tid=setInterval('msg_time()',1000) };
+
+    //타이머 함수
+    function msg_time() {
+      //남은 시간 계산
+      m = "남은시간 : "+Math.floor(SetTime / 60) + "분 " + (SetTime % 60) + "초";
+
+      //남은 시간 표시
+    	var msg = "<font size = 5 color='red'>" + m + "</font>"  ;
+    	document.all.ViewTimer.innerHTML = msg;		// ViewTimer div영역 출력
+
+    	//일회용 비밀번호 표시
+    	var psw = "<font size = 50 color='green'>" + "*" + newPassword + "#" + "</font>";
+    	document.all.OTPpw.innerHTML = psw;
+
+    	//설정한 시간에서 1초씩 감소
+    	SetTime--;
+
+    	//타이머가 끝났을 경우
+    	if (SetTime < 0) {
+    	  clearInterval(tid);
+        document.all.OTPpw.innerHTML = null;
+        document.all.ViewTimer.innerHTML = null;
+    		//alert("종료");
+
+        //라디오버튼 체크 해제
+        var radio = document.getElementsByName("add");
+
+        for(var i=0;radio.length;i++){
+          //체크되어 있다면 park[i].checked == true
+          //true -> false로 변환 ==> 체크해제
+          if(radio[i].checked){
+            radio[i].checked = false;
+          }
+        }
+    	}
+    }
+
+    //OTP버튼 클릭 이벤트 함수
+    function createOTP() {
+      var add_value; //주소 체크 변수 (체크되었을경우 1로 set)
+      //주소 체크 확인
+      var radio = document.getElementsByName("add");
+      if(radio[0].checked || radio[1].checked || radio[2].checked){
+        add_value=1;
+      }
+
+      //주소가 체크된경우
+      if(add_value == 1){
+        //OTP 생성 알고리즘
+        var randomValue = "0123456789";
+
+        for(i=1; i<=4; i++){
+          randomPoint = Math.floor(Math.random()*10);
+          Pwdchar = randomValue.charAt(randomPoint);
+          if(i == 1){
+            newPassword = Pwdchar;
+          }
+          else{
+            newPassword += Pwdchar;
+          }
+        }
+
+        var st = $(":input:radio[name=add]:checked").val();
+
+        //소켓통신으로 주소와 OTP를 서버에 전송하기 위해 JSON으로 파싱
+        var ParseJSON = {
+          address : st,
+          password : newPassword
+        };
+
+        //서버로 전송
+        socket.emit("create_OTP", JSON.stringify(ParseJSON));
+
+        // 타이머 설정 시간(기본 : 60초)
+        SetTime = 60;
+
+        //OTP생성 알림 메시지
+        alert("Created new OTP : *"+newPassword+"#");
+      }
+
+      //주소가 체크되지 않은경우
+      else{
+        alert("Check Address!!");
+      }
+    }
+    </script>
+
+    <style>
+      #jinubb-container {
+        width: 940px;
+        margin: 0px auto;
+        padding: 20px;
+        border: 1px solid #bcbcbc;
+      }
+      #jinubb-header {
+        text-align: center;
+        padding: 20px;
+        margin-bottom: 20px;
+        border: 1px solid #bcbcbc;
+      }
+      #jinubb-sidebar-left {
+        width: 350px;
+        padding: 20px;
+        margin-right: 20px;
+        margin-bottom: 20px;
+        float: left;
+        border: 1px solid #bcbcbc;
+      }
+      #jinubb-content {
+        width: 210px;
+        padding: 20px;
+        margin-bottom: 20px;
+        float: left;
+        border: 1px solid #bcbcbc;
+      }
+      #jinubb-sidebar-right {
+        width: 210px;
+        padding: 20px;
+        margin-bottom: 20px;
+        float: right;
+        border: 1px solid #bcbcbc;
+      }
+      #jinubb-footer {
+        clear: both;
+        border: 1px solid #bcbcbc;
+        text-align: right;
+      }
+    </style>
+    <style>
+      .pw{
+        background-color: skyblue;
+        padding:40px 100px;
+        font-align:center;
+        display: table;
+        margin-left: auto;
+        margin-right: auto;
+        font-size:20px;
+      }
+      .timer{
+        font-align:center;
+        font-size:20px;
+      }
+      .button {
+        background-color: blue;
+        border: none;
+        color: white;
+        padding: 65px 75px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 30px;
+        cursor: pointer;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .address{
+        font-size:16px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="jinubb-container">
+      <div id="jinubb-header">
+        <h1>OTP를 이용한 무인 택배 보관함</h1>
+      </div>
+
+      <div id="jinubb-sidebar-left">
+        <h2>비밀번호</h2>
+        <div id="OTPpw" class='pw'>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</div>
+        <div id="ViewTimer"></div>
+      </div>
+
+      <div id="jinubb-content">
+        <h2>주소 선택</h2>
+        <form id ="formname" name="formname" class = "address">
+          <p><input type="radio" style="width:32px;height:32px;" name="add" value="501">501호</input></p>
+          <p><input type="radio" style="width:32px;height:32px;" name="add" value="502">502호</input></p>
+          <p><input type="radio" style="width:32px;height:32px;" name="add" value="503">503호</input></p>
+        </form>
+      </div>
+
+      <div id="jinubb-sidebar-right">
+        <h2>OTP 생성</h2>
+        <input type='button' class='button' value='OTP' onclick="createOTP()"></input>
+      </div>
+
+      <div id="jinubb-footer">
+        <p>by깡통코딩</p>
+      </div>
+    </div>
+  </body>
+</html>

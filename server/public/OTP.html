@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>OTPbox</title>
+<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+   var socket=null;
+   $(document).ready(function(){
+	   socket=io.connect(); // 3000port
+   });
+	function createOTP() {
+    	var newPsswrod;
+    	var randomValue = "0123456789";
+    
+    	for(i=1; i<=4; i++){
+        	randomPoint = Math.floor(Math.random()*10);
+        	Pwdchar = randomValue.charAt(randomPoint);
+        	if(i == 1){
+            	newPassword = Pwdchar;
+        	}
+        	else{
+            	newPassword += Pwdchar;
+        	}
+    	}
+    	socket.emit("create_OTP", newPassword);
+    	alert("Created new OTP : "+newPassword);
+	}
+</script>
+</head>
+<body>
+<h1>OTPbox_GTcoding</h1>
+<form>
+    <input type='button' value='createOTP' onClick="createOTP()">
+</form>
+</body>
+</html>

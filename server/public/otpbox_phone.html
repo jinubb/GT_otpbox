@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>OTPbox</title>
+<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+
+    //소켓통신
+    var socket=null;
+    $(document).ready(function(){
+    	socket=io.connect(); // 3000port
+    });
+
+	//타이머
+	//1초에 한번씩 msg_time()함수 실행
+	window.onload = function TimerStart(){ tid=setInterval('msg_time()',1000) };
+
+	//타이머 함수
+	function msg_time() {
+		//남은 시간 계산
+		m = Math.floor(SetTime / 60) + "분 " + (SetTime % 60) + "초";
+
+		//남은 시간 표시
+		var msg = "<font color='#CC0000' size = 6>" + m + "</font>";
+		document.all.ViewTimer.innerHTML = msg;		// ViewTimer div영역 출력
+
+		//일회용 비밀번호 표시
+		var psw = "<font color='green' size = 40>" + newPassword + "</font>";
+		document.all.OTPpw.innerHTML = psw;
+
+		//설정한 시간에서 1초씩 감소
+		SetTime--;
+
+		//타이머가 끝났을 경우
+		if (SetTime < 0) {
+			clearInterval(tid);
+//			alert("종료");
+		}
+
+   }
+
+	function createOTP() {
+
+    	var randomValue = "0123456789";
+
+    	for(i=1; i<=4; i++){
+        	randomPoint = Math.floor(Math.random()*10);
+        	Pwdchar = randomValue.charAt(randomPoint);
+        	if(i == 1){
+            	newPassword = Pwdchar;
+        	}
+        	else{
+            	newPassword += Pwdchar;
+        	}
+    	}
+    	socket.emit("create_OTP", newPassword);
+
+
+
+      SetTime = 60;		// 최초 설정 시간(기본 : 초)
+
+    	alert("Created new OTP : "+newPassword);
+	}
+</script>
+<style>
+  body {
+    width:340px;
+  }
+  #header {
+  display:block;
+  	width:auto;
+  	height:35px;
+	margin-top:180px;
+  	background-color:#ddd;
+  	text-align:center;
+  	font-size:25px;
+  }
+  #nav{
+  	display:block;
+  	width:auto;
+  	height:55px;
+
+    padding:3px;
+  	background-color:#AAAAAA;
+  	text-align:center;
+  }
+  #section {
+  display:block;
+    float:left;
+    width:auto;
+    height:60px;
+	text-align:center;
+  	padding:20px;
+  	background-color:#ddd;
+  }
+  #article {
+  display:block;
+    width:220px;
+    height:40px;
+    background-color:#efefef;
+
+  }
+  #aside {
+  display:block;
+    float:left;
+    width:80px;
+    height:100px;
+
+  	background-color:#ddd;
+  }
+  #footer {
+  display:block;
+  	width : 340px;
+    text-align: right;
+    overflow:hidden;
+
+  	background-color:#ddd;
+  }
+</style>
+<style>
+
+.button {
+
+background-color: blue;
+
+border: none;
+
+color: white;
+padding: 35px 20px;
+text-align: center;
+
+text-decoration: none;
+
+display: inline-block;
+
+font-size: 20px;
+
+
+cursor: pointer;
+
+}
+
+</style>
+</head>
+<body>
+    <div id="header">일회용 비밀번호</div>
+    <div id="nav"><div id="OTPpw"></div></div>
+    <div id="section">
+      남은시간
+      <div id="article"><div id="ViewTimer"></div></div>
+    </div>
+    <div id="aside">
+  <form>
+      <input type='button' class='button' value='OTP' onclick="createOTP()" >
+  </form></div>
+    <div id="footer">by깡통코딩</div>
+</body>
+</html>
