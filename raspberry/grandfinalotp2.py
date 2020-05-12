@@ -21,11 +21,9 @@ def on_disconnect(client, userdata, flags, rc=0):
 
 def on_subscribe(client, userdata, mid, granted_qos):
     if mid == 1:
-        print
-        "Start subscribe : otpbox"
+        print ("Start subscribe : otpbox")
     elif mid == 2:
-        print
-        "Start subscribe : otpbox_android"
+        print ("Start subscribe : otpbox_android")
 
 
 def on_message(client, userdata, msg):
@@ -33,10 +31,10 @@ def on_message(client, userdata, msg):
     global box1_pw, box1_val, box2_pw, box2_val, box3_pw, box3_val
     # 서버에서받은메시지
     if (topic == "otpbox"):
-        print "Subscribe from server"
+        print ("Subscribe from server")
         # 박스선택 알고리즘
         if (box1_val == "unusable" and box2_val == "unusable" and box3_val == "unusable"):
-            print "All box unusable"
+            print ("All box unusable")
         else:
             global sub_pw
             # JSON 데이터 추출
@@ -46,22 +44,22 @@ def on_message(client, userdata, msg):
             add = str(json_data['address'])
 
             if (box1_val == "usable"):
-                print "Box1, Change password :", sub_pw, "address :", add
+                print ("Box1, Change password :", sub_pw, "address :", add)
                 box1_pw = sub_pw
                 temp = 1
                 box1_val = "unusable"
             elif (box2_val == "usable"):
-                print "Box2, Change password :", sub_pw, "address :", add
+                print ("Box2, Change password :", sub_pw, "address :", add)
                 box2_pw = sub_pw
                 temp = 2
                 box2_val = "unusable"
             elif (box3_val == "usable"):
-                print "Box3, Change password :", sub_pw, "address :", add
+                print ("Box3, Change password :", sub_pw, "address :", add)
                 box3_pw = sub_pw
                 temp = 3
                 box3_val = "unusable"
             else:
-                print "Error : select box"
+                print ("Error : select box")
                 temp = 4
 
             if (temp != 4):
@@ -71,7 +69,7 @@ def on_message(client, userdata, msg):
 
     # 안드로이드에서받은메시지
     elif (topic == "otpbox_android"):
-        print "message from android"
+        print ("message from android")
 
 
 # 새로운 클라이언트 생성
