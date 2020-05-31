@@ -1,0 +1,904 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="5"
+        android:background="#FFAFEEEE">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="OTP를 이용한 무인 택배 보관함"
+            android:textAlignment="center"
+            android:textSize="25dp"
+            android:id="@+id/tv1"/>
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <!-- 메인화면 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="visible"
+            android:id="@+id/linear_main">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="메인 화면입니다."
+                android:textSize="20dp"
+                android:textAlignment="center"
+                android:gravity="center"/>
+
+            <!--백그라운드작업 추가 -->
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btn_start"
+                android:visibility="gone"
+                android:text="백그라운드 실행"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btn_stop"
+                android:visibility="gone"
+                android:text="백그라운드 종료"/>
+
+        </LinearLayout>
+
+        <!-- 501호 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:id="@+id/add501"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp"
+                android:text="501호"
+                android:textSize="25dp"
+                android:textAlignment="center"
+                android:layout_gravity="center"/>
+
+            <!--택배가 없을 경우-->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/add501_nobox"
+                android:visibility="visible"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="도착한 택배가 없습니다."
+                    android:gravity="center"
+                    android:textColor="#FFDC143C"
+                    android:textSize="25dp"
+                    android:id="@+id/tv_add501"/>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/iv_add501"
+                    android:src="@drawable/nobox3" />
+            </LinearLayout>
+
+            <!--택배가 있을 경우-->
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="15dp"
+                        android:visibility="gone"
+                        android:id="@+id/add501_message1">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:background="@drawable/border"
+                            android:layout_marginTop="10dp"
+                            android:padding="15dp">
+
+                            <TextView
+                                android:layout_marginTop="15dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="비밀번호"
+                                android:textSize="20dp"
+                                android:textAlignment="center"
+                                android:layout_gravity="center"/>
+                            <TextView
+                                android:id="@+id/tv_pw_501_msg1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="None"
+                                android:textSize="25dp"
+                                android:textColor="#FFFF4500"
+                                android:textAlignment="center"
+                                android:layout_gravity="center"/>
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="보관함"
+                                android:textSize="20dp"
+                                android:textAlignment="center"
+                                android:layout_gravity="center"/>
+                            <TextView
+                                android:id="@+id/tv_box_501_msg1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="None"
+                                android:textSize="25dp"
+                                android:textColor="#FFFF4500"
+                                android:textAlignment="center"
+                                android:layout_gravity="center"/>
+                            <Button
+                                android:id="@+id/btn_501_msg1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="20dp"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginRight="5dp"
+                                android:paddingTop="10dp"
+                                android:paddingBottom="10dp"
+                                android:paddingLeft="50dp"
+                                android:paddingRight="50dp"
+                                android:textSize="20dp"
+                                android:text="수령완료"
+                                android:layout_gravity="center"/>
+                        </LinearLayout>
+
+                        <!-- 타이틀 -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:text="   택배왔숑   "
+                            android:layout_marginLeft="15dp"
+                            android:background="#ffffff"
+                            android:textSize="17sp" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="15dp"
+                        android:visibility="gone"
+                        android:id="@+id/add501_message2">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:background="@drawable/border"
+                            android:layout_marginTop="10dp"
+                            android:padding="15dp">
+
+                            <TextView
+                                android:layout_marginTop="15dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="비밀번호"
+                                android:textSize="20dp"
+                                android:textAlignment="center"
+                                android:layout_gravity="center"/>
+                            <TextView
+                                android:id="@+id/tv_pw_501_msg2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="None"
+                                android:textSize="25dp"
+                                android:textColor="#FFFF4500"
+                                android:textAlignment="center"
+                                android:layout_gravity="center"/>
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="보관함"
+                                android:textSize="20dp"
+                                android:textAlignment="center"
+                                android:layout_gravity="center"/>
+                            <TextView
+                                android:id="@+id/tv_box_501_msg2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="None"
+                                android:textSize="25dp"
+                                android:textColor="#FFFF4500"
+                                android:textAlignment="center"
+                                android:layout_gravity="center"/>
+                            <Button
+                                android:id="@+id/btn_501_msg2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="20dp"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginRight="5dp"
+                                android:paddingTop="10dp"
+                                android:paddingBottom="10dp"
+                                android:paddingLeft="50dp"
+                                android:paddingRight="50dp"
+                                android:textSize="20dp"
+                                android:text="수령완료"
+                                android:layout_gravity="center"/>
+                        </LinearLayout>
+
+                        <!-- 타이틀 -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:text="   택배왔숑   "
+                            android:layout_marginLeft="15dp"
+                            android:background="#ffffff"
+                            android:textSize="17sp" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="15dp"
+                        android:visibility="gone"
+                        android:id="@+id/add501_message3">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:background="@drawable/border"
+                            android:layout_marginTop="10dp"
+                            android:padding="15dp">
+
+                            <TextView
+                                android:layout_marginTop="15dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="비밀번호"
+                                android:textSize="20dp"
+                                android:textAlignment="center"
+                                android:layout_gravity="center"/>
+                            <TextView
+                                android:id="@+id/tv_pw_501_msg3"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="None"
+                                android:textSize="25dp"
+                                android:textColor="#FFFF4500"
+                                android:textAlignment="center"
+                                android:layout_gravity="center"/>
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="보관함"
+                                android:textSize="20dp"
+                                android:textAlignment="center"
+                                android:layout_gravity="center"/>
+                            <TextView
+                                android:id="@+id/tv_box_501_msg3"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="None"
+                                android:textSize="25dp"
+                                android:textColor="#FFFF4500"
+                                android:textAlignment="center"
+                                android:layout_gravity="center"/>
+                            <Button
+                                android:id="@+id/btn_501_msg3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="20dp"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginRight="5dp"
+                                android:paddingTop="10dp"
+                                android:paddingBottom="10dp"
+                                android:paddingLeft="50dp"
+                                android:paddingRight="50dp"
+                                android:textSize="20dp"
+                                android:text="수령완료"
+                                android:layout_gravity="center"/>
+                        </LinearLayout>
+
+                        <!-- 타이틀 -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:text="   택배왔숑   "
+                            android:layout_marginLeft="15dp"
+                            android:background="#ffffff"
+                            android:textSize="17sp" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+
+        <!-- 502호 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:id="@+id/add502"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp"
+                android:text="502호"
+                android:textSize="25dp"
+                android:textAlignment="center"
+                android:layout_gravity="center"/>
+
+            <!--택배가 없을 경우-->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/add502_nobox"
+                android:visibility="visible"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="도착한 택배가 없습니다."
+                    android:gravity="center"
+                    android:textColor="#FFDC143C"
+                    android:textSize="25dp"
+                    android:id="@+id/tv_add502"/>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/iv_add502"
+                    android:src="@drawable/nobox3" />
+            </LinearLayout>
+
+            <!--택배가 있을 경우-->
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="15dp"
+                        android:visibility="gone"
+                        android:id="@+id/add502_message1">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:background="@drawable/border"
+                            android:layout_marginTop="10dp"
+                            android:padding="15dp">
+
+                            <TextView
+                                android:layout_marginTop="15dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="비밀번호"
+                                android:textSize="20dp"
+                                android:textAlignment="center"
+                                android:layout_gravity="center"/>
+                            <TextView
+                                android:id="@+id/tv_pw_502_msg1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="None"
+                                android:textSize="25dp"
+                                android:textColor="#FFFF4500"
+                                android:textAlignment="center"
+                                android:layout_gravity="center"/>
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="보관함"
+                                android:textSize="20dp"
+                                android:textAlignment="center"
+                                android:layout_gravity="center"/>
+                            <TextView
+                                android:id="@+id/tv_box_502_msg1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="None"
+                                android:textSize="25dp"
+                                android:textColor="#FFFF4500"
+                                android:textAlignment="center"
+                                android:layout_gravity="center"/>
+                            <Button
+                                android:id="@+id/btn_502_msg1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="20dp"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginRight="5dp"
+                                android:paddingTop="10dp"
+                                android:paddingBottom="10dp"
+                                android:paddingLeft="50dp"
+                                android:paddingRight="50dp"
+                                android:textSize="20dp"
+                                android:text="수령완료"
+                                android:layout_gravity="center"/>
+                        </LinearLayout>
+
+                        <!-- 타이틀 -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:text="   택배왔숑   "
+                            android:layout_marginLeft="15dp"
+                            android:background="#ffffff"
+                            android:textSize="17sp" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="15dp"
+                        android:visibility="gone"
+                        android:id="@+id/add502_message2">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:background="@drawable/border"
+                            android:layout_marginTop="10dp"
+                            android:padding="15dp">
+
+                            <TextView
+                                android:layout_marginTop="15dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="비밀번호"
+                                android:textSize="20dp"
+                                android:textAlignment="center"
+                                android:layout_gravity="center"/>
+                            <TextView
+                                android:id="@+id/tv_pw_502_msg2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="None"
+                                android:textSize="25dp"
+                                android:textColor="#FFFF4500"
+                                android:textAlignment="center"
+                                android:layout_gravity="center"/>
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="보관함"
+                                android:textSize="20dp"
+                                android:textAlignment="center"
+                                android:layout_gravity="center"/>
+                            <TextView
+                                android:id="@+id/tv_box_502_msg2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="None"
+                                android:textSize="25dp"
+                                android:textColor="#FFFF4500"
+                                android:textAlignment="center"
+                                android:layout_gravity="center"/>
+                            <Button
+                                android:id="@+id/btn_502_msg2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="20dp"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginRight="5dp"
+                                android:paddingTop="10dp"
+                                android:paddingBottom="10dp"
+                                android:paddingLeft="50dp"
+                                android:paddingRight="50dp"
+                                android:textSize="20dp"
+                                android:text="수령완료"
+                                android:layout_gravity="center"/>
+                        </LinearLayout>
+
+                        <!-- 타이틀 -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:text="   택배왔숑   "
+                            android:layout_marginLeft="15dp"
+                            android:background="#ffffff"
+                            android:textSize="17sp" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="15dp"
+                        android:visibility="gone"
+                        android:id="@+id/add502_message3">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:background="@drawable/border"
+                            android:layout_marginTop="10dp"
+                            android:padding="15dp">
+
+                            <TextView
+                                android:layout_marginTop="15dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="비밀번호"
+                                android:textSize="20dp"
+                                android:textAlignment="center"
+                                android:layout_gravity="center"/>
+                            <TextView
+                                android:id="@+id/tv_pw_502_msg3"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="None"
+                                android:textSize="25dp"
+                                android:textColor="#FFFF4500"
+                                android:textAlignment="center"
+                                android:layout_gravity="center"/>
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="보관함"
+                                android:textSize="20dp"
+                                android:textAlignment="center"
+                                android:layout_gravity="center"/>
+                            <TextView
+                                android:id="@+id/tv_box_502_msg3"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="None"
+                                android:textSize="25dp"
+                                android:textColor="#FFFF4500"
+                                android:textAlignment="center"
+                                android:layout_gravity="center"/>
+                            <Button
+                                android:id="@+id/btn_502_msg3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="20dp"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginRight="5dp"
+                                android:paddingTop="10dp"
+                                android:paddingBottom="10dp"
+                                android:paddingLeft="50dp"
+                                android:paddingRight="50dp"
+                                android:textSize="20dp"
+                                android:text="수령완료"
+                                android:layout_gravity="center"/>
+                        </LinearLayout>
+
+                        <!-- 타이틀 -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:text="   택배왔숑   "
+                            android:layout_marginLeft="15dp"
+                            android:background="#ffffff"
+                            android:textSize="17sp" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+
+        <!-- 503호 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:id="@+id/add503"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp"
+                android:text="503호"
+                android:textSize="25dp"
+                android:textAlignment="center"
+                android:layout_gravity="center"/>
+
+            <!--택배가 없을 경우-->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/add503_nobox"
+                android:visibility="visible"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="도착한 택배가 없습니다."
+                    android:gravity="center"
+                    android:textColor="#FFDC143C"
+                    android:textSize="25dp"
+                    android:id="@+id/tv_add503"/>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/iv_add503"
+                    android:src="@drawable/nobox3" />
+            </LinearLayout>
+
+            <!--택배가 있을 경우-->
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="15dp"
+                        android:visibility="gone"
+                        android:id="@+id/add503_message1">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:background="@drawable/border"
+                            android:layout_marginTop="10dp"
+                            android:padding="15dp">
+
+                            <TextView
+                                android:layout_marginTop="15dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="비밀번호"
+                                android:textSize="20dp"
+                                android:textAlignment="center"
+                                android:layout_gravity="center"/>
+                            <TextView
+                                android:id="@+id/tv_pw_503_msg1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="None"
+                                android:textSize="25dp"
+                                android:textColor="#FFFF4500"
+                                android:textAlignment="center"
+                                android:layout_gravity="center"/>
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="보관함"
+                                android:textSize="20dp"
+                                android:textAlignment="center"
+                                android:layout_gravity="center"/>
+                            <TextView
+                                android:id="@+id/tv_box_503_msg1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="None"
+                                android:textSize="25dp"
+                                android:textColor="#FFFF4500"
+                                android:textAlignment="center"
+                                android:layout_gravity="center"/>
+                            <Button
+                                android:id="@+id/btn_503_msg1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="20dp"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginRight="5dp"
+                                android:paddingTop="10dp"
+                                android:paddingBottom="10dp"
+                                android:paddingLeft="50dp"
+                                android:paddingRight="50dp"
+                                android:textSize="20dp"
+                                android:text="수령완료"
+                                android:layout_gravity="center"/>
+                        </LinearLayout>
+
+                        <!-- 타이틀 -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:text="   택배왔숑   "
+                            android:layout_marginLeft="15dp"
+                            android:background="#ffffff"
+                            android:textSize="17sp" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="15dp"
+                        android:visibility="gone"
+                        android:id="@+id/add503_message2">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:background="@drawable/border"
+                            android:layout_marginTop="10dp"
+                            android:padding="15dp">
+
+                            <TextView
+                                android:layout_marginTop="15dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="비밀번호"
+                                android:textSize="20dp"
+                                android:textAlignment="center"
+                                android:layout_gravity="center"/>
+                            <TextView
+                                android:id="@+id/tv_pw_503_msg2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="None"
+                                android:textSize="25dp"
+                                android:textColor="#FFFF4500"
+                                android:textAlignment="center"
+                                android:layout_gravity="center"/>
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="보관함"
+                                android:textSize="20dp"
+                                android:textAlignment="center"
+                                android:layout_gravity="center"/>
+                            <TextView
+                                android:id="@+id/tv_box_503_msg2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="None"
+                                android:textSize="25dp"
+                                android:textColor="#FFFF4500"
+                                android:textAlignment="center"
+                                android:layout_gravity="center"/>
+                            <Button
+                                android:id="@+id/btn_503_msg2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="20dp"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginRight="5dp"
+                                android:paddingTop="10dp"
+                                android:paddingBottom="10dp"
+                                android:paddingLeft="50dp"
+                                android:paddingRight="50dp"
+                                android:textSize="20dp"
+                                android:text="수령완료"
+                                android:layout_gravity="center"/>
+                        </LinearLayout>
+
+                        <!-- 타이틀 -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:text="   택배왔숑   "
+                            android:layout_marginLeft="15dp"
+                            android:background="#ffffff"
+                            android:textSize="17sp" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="15dp"
+                        android:visibility="gone"
+                        android:id="@+id/add503_message3">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:background="@drawable/border"
+                            android:layout_marginTop="10dp"
+                            android:padding="15dp">
+
+                            <TextView
+                                android:layout_marginTop="15dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="비밀번호"
+                                android:textSize="20dp"
+                                android:textAlignment="center"
+                                android:layout_gravity="center"/>
+                            <TextView
+                                android:id="@+id/tv_pw_503_msg3"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="None"
+                                android:textSize="25dp"
+                                android:textColor="#FFFF4500"
+                                android:textAlignment="center"
+                                android:layout_gravity="center"/>
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="보관함"
+                                android:textSize="20dp"
+                                android:textAlignment="center"
+                                android:layout_gravity="center"/>
+                            <TextView
+                                android:id="@+id/tv_box_503_msg3"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="None"
+                                android:textSize="25dp"
+                                android:textColor="#FFFF4500"
+                                android:textAlignment="center"
+                                android:layout_gravity="center"/>
+                            <Button
+                                android:id="@+id/btn_503_msg3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="20dp"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginRight="5dp"
+                                android:paddingTop="10dp"
+                                android:paddingBottom="10dp"
+                                android:paddingLeft="50dp"
+                                android:paddingRight="50dp"
+                                android:textSize="20dp"
+                                android:text="수령완료"
+                                android:layout_gravity="center"/>
+                        </LinearLayout>
+
+                        <!-- 타이틀 -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:text="   택배왔숑   "
+                            android:layout_marginLeft="15dp"
+                            android:background="#ffffff"
+                            android:textSize="17sp" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="5"
+        android:background="#FFAFEEEE">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical|right"
+            android:text="by깡통코딩"
+            android:textSize="20dp"/>
+    </LinearLayout>
+</LinearLayout>

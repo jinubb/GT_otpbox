@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/item_main"
+        android:title="메인화면">
+    </item>
+    <group
+        android:id="@+id/menu_rg1"
+        android:checkableBehavior="single"
+        android:title="주소 선택">
+        <item
+            android:id="@+id/item_501"
+            android:title="501호">
+        </item>
+        <item
+            android:id="@+id/item_502"
+            android:title="502호">
+        </item>
+        <item
+            android:id="@+id/item_503"
+            android:title="503호">
+        </item>
+
+    </group>
+</menu>
