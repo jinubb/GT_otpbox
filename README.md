@@ -40,4 +40,4 @@
 
 
 ### [세부 내용]
-- [Document]()
+- [Document](https://github.com/jinubb/GT_otpbox/tree/master/Document)
